@@ -19,8 +19,8 @@ void MainWindow::on_startButton_clicked()
     rrt->setMaxIterations(ui->maxIterations->text().toInt());
     rrt->setStepSize(ui->stepSize->text().toInt());
 
-    assert(rrt->step_size != 0);
-    assert(rrt->max_iter != 0);
+    assert(rrt->step_size > 0);
+    assert(rrt->max_iter > 0);
 
     // RRT Algorithm
     for(int i = 0; i < renderArea->rrt->max_iter; i++) {
