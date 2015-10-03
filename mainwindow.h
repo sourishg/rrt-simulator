@@ -19,6 +19,7 @@ private:
     Ui::MainWindow *ui;
     RenderArea *renderArea;
     RRT *rrt;
+    bool simulated;
 private slots:
     void on_startButton_clicked();
     void on_resetButton_clicked();

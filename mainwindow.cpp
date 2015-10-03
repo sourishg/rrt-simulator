@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     renderArea = ui->renderArea;
     rrt = renderArea->rrt;
+    simulated = false;
 }
 
 /**
@@ -15,6 +16,12 @@ MainWindow::MainWindow(QWidget *parent) :
  */
 void MainWindow::on_startButton_clicked()
 {
+    if (simulated) {
+        ui->statusBox->setText(tr("Please reset!"));
+        renderArea->update();
+        return;
+    }
+    simulated = true;
     // get step size and max iterations from GUI.
     rrt->setMaxIterations(ui->maxIterations->text().toInt());
     rrt->setStepSize(ui->stepSize->text().toInt());
@@ -64,6 +71,7 @@ void MainWindow::on_startButton_clicked()
  */
 void MainWindow::on_resetButton_clicked()
 {
+    simulated = false;
     ui->statusBox->setText(tr(""));
     rrt->obstacles->obstacles.clear();
     rrt->obstacles->obstacles.resize(0);
