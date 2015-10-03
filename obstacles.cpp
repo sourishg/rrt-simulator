@@ -4,8 +4,14 @@ Obstacles::Obstacles()
 {
 }
 
+/**
+ * @brief Obstacles are stored as rectangles. Rectangle is denoted by two points : topLeft and bottomRight.
+ * @param firstPoint
+ * @param secondPoint
+ */
 void Obstacles::addObstacle(Vector2f firstPoint, Vector2f secondPoint)
 {
+    // Get topLeft and bottomRight points from the given points.
     Vector2f tmp;
     if (firstPoint.x() > secondPoint.x() && firstPoint.y() > secondPoint.y()) {
         tmp = firstPoint;
@@ -23,6 +29,12 @@ void Obstacles::addObstacle(Vector2f firstPoint, Vector2f secondPoint)
     obstacles.push_back(make_pair(firstPoint, secondPoint));
 }
 
+/**
+ * @brief Check if a line segment intersects a rectangle.
+ * @param p1
+ * @param p2
+ * @return
+ */
 bool Obstacles::isSegmentInObstacle(Vector2f &p1, Vector2f &p2)
 {
     QLineF lineSegment(p1.x(), p1.y(), p2.x(), p2.y());
@@ -38,6 +50,7 @@ bool Obstacles::isSegmentInObstacle(Vector2f &p1, Vector2f &p2)
         QLineF::IntersectType x2 = lineSegment.intersect(lseg2, intersectPt);
         QLineF::IntersectType x3 = lineSegment.intersect(lseg3, intersectPt);
         QLineF::IntersectType x4 = lineSegment.intersect(lseg4, intersectPt);
+        // check for bounded intersection. IntersectType for bounded intersection is 1.
         if (x1 == 1 || x2 == 1 || x3 == 1 || x4 == 1)
             return true;
     }

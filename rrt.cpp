@@ -16,6 +16,9 @@ RRT::RRT()
     max_iter = 3000;
 }
 
+/**
+ * @brief Initialize root node of RRT.
+ */
 void RRT::initialize()
 {
     root = new Node;
@@ -25,6 +28,10 @@ void RRT::initialize()
     nodes.push_back(root);
 }
 
+/**
+ * @brief Generate a random node in the field.
+ * @return
+ */
 Node* RRT::getRandomNode()
 {
     Node* ret;
@@ -37,12 +44,23 @@ Node* RRT::getRandomNode()
     return NULL;
 }
 
+/**
+ * @brief Helper method to find distance between two positions.
+ * @param p
+ * @param q
+ * @return
+ */
 int RRT::distance(Vector2f &p, Vector2f &q)
 {
     Vector2f v = p - q;
     return sqrt(powf(v.x(), 2) + powf(v.y(), 2));
 }
 
+/**
+ * @brief Get nearest node from a given configuration/position.
+ * @param point
+ * @return
+ */
 Node* RRT::nearest(Vector2f point)
 {
     float minDist = 1e9;
@@ -57,6 +75,12 @@ Node* RRT::nearest(Vector2f point)
     return closest;
 }
 
+/**
+ * @brief Find a configuration at a distance step_size from nearest node to random node.
+ * @param q
+ * @param qNearest
+ * @return
+ */
 Vector2f RRT::newConfig(Node *q, Node *qNearest)
 {
     Vector2f to = q->position;
@@ -67,6 +91,11 @@ Vector2f RRT::newConfig(Node *q, Node *qNearest)
     return ret;
 }
 
+/**
+ * @brief Add a node to the tree.
+ * @param qNearest
+ * @param qNew
+ */
 void RRT::add(Node *qNearest, Node *qNew)
 {
     qNew->parent = qNearest;
@@ -75,6 +104,10 @@ void RRT::add(Node *qNearest, Node *qNew)
     lastNode = qNew;
 }
 
+/**
+ * @brief Check if the last node is close to the end position.
+ * @return
+ */
 bool RRT::reached()
 {
     if (distance(lastNode->position, endPos) < END_DIST_THRESHOLD)
@@ -92,6 +125,10 @@ void RRT::setMaxIterations(int iter)
     max_iter = iter;
 }
 
+/**
+ * @brief Delete all nodes using DFS technique.
+ * @param root
+ */
 void RRT::deleteNodes(Node *root)
 {
     for(int i = 0; i < (int)root->children.size(); i++) {

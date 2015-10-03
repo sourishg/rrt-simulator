@@ -9,12 +9,20 @@ MainWindow::MainWindow(QWidget *parent) :
     renderArea = ui->renderArea;
     rrt = renderArea->rrt;
 }
+
+/**
+ * @brief Start the simulator.
+ */
 void MainWindow::on_startButton_clicked()
 {
+    // get step size and max iterations from GUI.
     rrt->setMaxIterations(ui->maxIterations->text().toInt());
     rrt->setStepSize(ui->stepSize->text().toInt());
+
     assert(rrt->step_size != 0);
     assert(rrt->max_iter != 0);
+
+    // RRT Algorithm
     for(int i = 0; i < renderArea->rrt->max_iter; i++) {
         Node *q = rrt->getRandomNode();
         if (q) {
@@ -37,16 +45,23 @@ void MainWindow::on_startButton_clicked()
     if (rrt->reached()) {
         q = rrt->lastNode;
     }
-    else {
+    else
+    {
+        // if not reached yet, then shortestPath will start from the closest node to end point.
         q = rrt->nearest(rrt->endPos);
         ui->statusBox->setText(tr("Exceeded max iterations!"));
     }
+    // generate shortest path to destination.
     while (q != NULL) {
         rrt->path.push_back(q);
         q = q->parent;
     }
     renderArea->update();
 }
+
+/**
+ * @brief Delete all obstacles, nodes and paths from the simulator.
+ */
 void MainWindow::on_resetButton_clicked()
 {
     ui->statusBox->setText(tr(""));

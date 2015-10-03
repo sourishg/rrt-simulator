@@ -8,6 +8,11 @@ RenderArea::RenderArea(QWidget *parent) : QWidget(parent)
     scribbling = false;
     rrt = new RRT;
 }
+
+/**
+ * @brief Draw the world.
+ * @param painter
+ */
 void RenderArea::drawField(QPainter &painter)
 {
     painter.save();
@@ -20,6 +25,11 @@ void RenderArea::drawField(QPainter &painter)
     painter.drawRect(field);
     painter.restore();
 }
+
+/**
+ * @brief Draw the start position of the bot.
+ * @param painter
+ */
 void RenderArea::drawStartPos(QPainter &painter)
 {
     painter.save();
@@ -29,6 +39,11 @@ void RenderArea::drawStartPos(QPainter &painter)
     painter.drawEllipse(this->x() + START_POS_X - BOT_RADIUS, this->y() + START_POS_Y - BOT_RADIUS, 2 * BOT_RADIUS, 2 * BOT_RADIUS);
     painter.restore();
 }
+
+/**
+ * @brief Draw the end point.
+ * @param painter
+ */
 void RenderArea::drawEndPos(QPainter &painter)
 {
     painter.save();
@@ -38,6 +53,11 @@ void RenderArea::drawEndPos(QPainter &painter)
     painter.drawEllipse(END_POS_X - BOT_RADIUS, END_POS_Y - BOT_RADIUS, 2 * BOT_RADIUS, 2 * BOT_RADIUS);
     painter.restore();
 }
+
+/**
+ * @brief Draw all the rectangular obstacles.
+ * @param painter
+ */
 void RenderArea::drawObstacles(QPainter &painter)
 {
     painter.save();
@@ -54,6 +74,11 @@ void RenderArea::drawObstacles(QPainter &painter)
     }
     painter.restore();
 }
+
+/**
+ * @brief Draw all the nodes generated in the RRT algorithm.
+ * @param painter
+ */
 void RenderArea::drawNodes(QPainter &painter)
 {
     painter.save();
@@ -71,6 +96,8 @@ void RenderArea::drawNodes(QPainter &painter)
     }
     painter.setPen(Qt::red);
     painter.setBrush(QBrush(Qt::red));
+
+    // if a path exists, draw it.
     for(int i = 0; i < (int)rrt->path.size() - 1; i++) {
         QPointF p1(rrt->path[i]->position.x(), rrt->path[i]->position.y());
         QPointF p2(rrt->path[i+1]->position.x(), rrt->path[i+1]->position.y());
@@ -89,6 +116,7 @@ void RenderArea::paintEvent(QPaintEvent *)
     drawNodes(painter);
     emit painting();
 }
+
 void RenderArea::mousePressEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton) {
