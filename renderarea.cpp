@@ -45,7 +45,7 @@ void RenderArea::drawObstacles(QPainter &painter)
     painter.setPen(Qt::black);
     painter.setBrush(QBrush(Qt::black));
     pair<Vector2f, Vector2f> obstacle;
-    for(int i = 0; i < rrt->obstacles->obstacles.size(); i++) {
+    for(int i = 0; i < (int)rrt->obstacles->obstacles.size(); i++) {
         obstacle = rrt->obstacles->obstacles[i];
         QPoint topLeft(obstacle.first.x(), obstacle.first.y());
         QPoint bottomRight(obstacle.second.x(), obstacle.second.y());
@@ -69,8 +69,8 @@ void RenderArea::drawNodes(QPainter &painter)
         pos = rrt->nodes[i]->position;
         painter.drawEllipse(pos.x() - NODE_RADIUS, pos.y() - NODE_RADIUS, 2 * NODE_RADIUS, 2 * NODE_RADIUS);
     }
-    painter.setPen(Qt::magenta);
-    painter.setBrush(QBrush(Qt::magenta));
+    painter.setPen(Qt::red);
+    painter.setBrush(QBrush(Qt::red));
     for(int i = 0; i < (int)rrt->path.size() - 1; i++) {
         QPointF p1(rrt->path[i]->position.x(), rrt->path[i]->position.y());
         QPointF p2(rrt->path[i+1]->position.x(), rrt->path[i+1]->position.y());
@@ -94,7 +94,6 @@ void RenderArea::mousePressEvent(QMouseEvent *event)
     if (event->button() == Qt::LeftButton) {
         lastMouseClickedPoint = event->pos();
         scribbling = true;
-        qDebug() << event->x() << ", " << event->y() << endl;
     }
 }
 
@@ -108,7 +107,6 @@ void RenderArea::mouseReleaseEvent(QMouseEvent *event)
     if (event->button() == Qt::LeftButton && scribbling) {
         QPoint curPoint = event->pos();
         rrt->obstacles->addObstacle(Vector2f(lastMouseClickedPoint.x(), lastMouseClickedPoint.y()), Vector2f(curPoint.x(), curPoint.y()));
-        // obstacles->displayObstacles();
         update();
         scribbling = false;
     }

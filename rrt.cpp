@@ -77,7 +77,7 @@ void RRT::add(Node *qNearest, Node *qNew)
 
 bool RRT::reached()
 {
-    if (distance(lastNode->position, endPos) < 15.0)
+    if (distance(lastNode->position, endPos) < END_DIST_THRESHOLD)
         return true;
     return false;
 }

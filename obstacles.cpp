@@ -43,11 +43,3 @@ bool Obstacles::isSegmentInObstacle(Vector2f &p1, Vector2f &p2)
     }
     return false;
 }
-
-void Obstacles::displayObstacles()
-{
-    for(int i = 0; i < (int)obstacles.size(); i++) {
-        qDebug() << obstacles[i].first.x() << ", " << obstacles[i].first.y() << " : " << obstacles[i].second.x() << ", " << obstacles[i].second.y() << endl;
-    }
-    qDebug() << " --- " << endl;
-}

@@ -29,14 +29,18 @@ void MainWindow::on_startButton_clicked()
             }
         }
         if (rrt->reached()) {
+            ui->statusBox->setText(tr("Reached Destination!"));
             break;
         }
     }
     Node *q;
-    if (rrt->reached())
+    if (rrt->reached()) {
         q = rrt->lastNode;
-    else
+    }
+    else {
         q = rrt->nearest(rrt->endPos);
+        ui->statusBox->setText(tr("Exceeded max iterations!"));
+    }
     while (q != NULL) {
         rrt->path.push_back(q);
         q = q->parent;
@@ -45,6 +49,7 @@ void MainWindow::on_startButton_clicked()
 }
 void MainWindow::on_resetButton_clicked()
 {
+    ui->statusBox->setText(tr(""));
     rrt->obstacles->obstacles.clear();
     rrt->obstacles->obstacles.resize(0);
     rrt->deleteNodes(rrt->root);
