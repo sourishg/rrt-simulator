@@ -21,6 +21,7 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h \
     renderarea.h \
     obstacles.h \
-    rrt.h
+    rrt.h \
+    constants.h
 
 FORMS    += mainwindow.ui

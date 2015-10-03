@@ -26,7 +26,7 @@ void RenderArea::drawStartPos(QPainter &painter)
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen(Qt::black);
     painter.setBrush(QBrush(Qt::red));
-    painter.drawEllipse(this->x()+20, this->y()+20, 21.6, 21.6);
+    painter.drawEllipse(this->x() + START_POS_X - BOT_RADIUS, this->y() + START_POS_Y - BOT_RADIUS, 2 * BOT_RADIUS, 2 * BOT_RADIUS);
     painter.restore();
 }
 void RenderArea::drawEndPos(QPainter &painter)
@@ -35,7 +35,7 @@ void RenderArea::drawEndPos(QPainter &painter)
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen(Qt::black);
     painter.setBrush(QBrush(Qt::blue));
-    painter.drawEllipse(this->width()-40, this->height()-40, 21.6, 21.6);
+    painter.drawEllipse(END_POS_X - BOT_RADIUS, END_POS_Y - BOT_RADIUS, 2 * BOT_RADIUS, 2 * BOT_RADIUS);
     painter.restore();
 }
 void RenderArea::drawObstacles(QPainter &painter)
@@ -45,8 +45,8 @@ void RenderArea::drawObstacles(QPainter &painter)
     painter.setPen(Qt::black);
     painter.setBrush(QBrush(Qt::black));
     pair<Vector2f, Vector2f> obstacle;
-    for(int i = 0; i < rrt->obstacles->totalObstacles(); i++) {
-        obstacle = rrt->obstacles->getObstacle(i);
+    for(int i = 0; i < rrt->obstacles->obstacles.size(); i++) {
+        obstacle = rrt->obstacles->obstacles[i];
         QPoint topLeft(obstacle.first.x(), obstacle.first.y());
         QPoint bottomRight(obstacle.second.x(), obstacle.second.y());
         QRect rect(topLeft, bottomRight);
@@ -67,7 +67,7 @@ void RenderArea::drawNodes(QPainter &painter)
             painter.drawEllipse(pos.x()-1.5, pos.y()-1.5, 3, 3);
         }
         pos = rrt->nodes[i]->position;
-        painter.drawEllipse(pos.x()-1.5, pos.y()-1.5, 3, 3);
+        painter.drawEllipse(pos.x() - NODE_RADIUS, pos.y() - NODE_RADIUS, 2 * NODE_RADIUS, 2 * NODE_RADIUS);
     }
     painter.setPen(Qt::magenta);
     painter.setBrush(QBrush(Qt::magenta));

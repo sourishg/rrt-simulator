@@ -18,8 +18,10 @@ public:
 private:
     Ui::MainWindow *ui;
     RenderArea *renderArea;
+    RRT *rrt;
 private slots:
     void on_startButton_clicked();
+    void on_resetButton_clicked();
 };
 
 #endif // MAINWINDOW_H

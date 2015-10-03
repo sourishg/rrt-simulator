@@ -3,29 +3,36 @@
 RRT::RRT()
 {
     obstacles = new Obstacles;
-    startPos.x() = 30;
-    startPos.y() = 30;
-    endPos.x() = 270;
-    endPos.y() = 270;
+    startPos.x() = START_POS_X;
+    startPos.y() = START_POS_Y;
+    endPos.x() = END_POS_X;
+    endPos.y() = END_POS_Y;
     root = new Node;
     root->parent = NULL;
     root->position = startPos;
     lastNode = root;
     nodes.push_back(root);
     step_size = 3;
-    max_iter = 2000;
+    max_iter = 3000;
+}
+
+void RRT::initialize()
+{
+    root = new Node;
+    root->parent = NULL;
+    root->position = startPos;
+    lastNode = root;
+    nodes.push_back(root);
 }
 
 Node* RRT::getRandomNode()
 {
     Node* ret;
-    Vector2f point(drand48() * 500.0, drand48() * 451.0);
-    if (point.x() >= 0 && point.x() <= 300 && point.y() >= 0 && point.y() <= 300) {
-        if (!obstacles->isPointInObstacle(point)) {
-            ret = new Node;
-            ret->position = point;
-            return ret;
-        }
+    Vector2f point(drand48() * WORLD_WIDTH, drand48() * WORLD_HEIGHT);
+    if (point.x() >= 0 && point.x() <= WORLD_WIDTH && point.y() >= 0 && point.y() <= WORLD_HEIGHT) {
+        ret = new Node;
+        ret->position = point;
+        return ret;
     }
     return NULL;
 }
@@ -73,4 +80,22 @@ bool RRT::reached()
     if (distance(lastNode->position, endPos) < 15.0)
         return true;
     return false;
+}
+
+void RRT::setStepSize(int step)
+{
+    step_size = step;
+}
+
+void RRT::setMaxIterations(int iter)
+{
+    max_iter = iter;
+}
+
+void RRT::deleteNodes(Node *root)
+{
+    for(int i = 0; i < (int)root->children.size(); i++) {
+        deleteNodes(root->children[i]);
+    }
+    delete root;
 }

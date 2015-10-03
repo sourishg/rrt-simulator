@@ -7,32 +7,55 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     renderArea = ui->renderArea;
+    rrt = renderArea->rrt;
 }
 void MainWindow::on_startButton_clicked()
 {
-    //for(int i = 0; i < renderArea->rrt->max_iter; i++) {
-    while (!renderArea->rrt->reached()) {
-        Node *q = renderArea->rrt->getRandomNode();
+    rrt->setMaxIterations(ui->maxIterations->text().toInt());
+    rrt->setStepSize(ui->stepSize->text().toInt());
+    assert(rrt->step_size != 0);
+    assert(rrt->max_iter != 0);
+    for(int i = 0; i < renderArea->rrt->max_iter; i++) {
+        Node *q = rrt->getRandomNode();
         if (q) {
-            Node *qNearest = renderArea->rrt->nearest(q->position);
-            if (renderArea->rrt->distance(q->position, qNearest->position) > renderArea->rrt->step_size) {
-                Vector2f newConfig = renderArea->rrt->newConfig(q, qNearest);
-                if (!renderArea->rrt->obstacles->isPointInObstacle(newConfig)) {
+            Node *qNearest = rrt->nearest(q->position);
+            if (rrt->distance(q->position, qNearest->position) > rrt->step_size) {
+                Vector2f newConfig = rrt->newConfig(q, qNearest);
+                if (!rrt->obstacles->isSegmentInObstacle(newConfig, qNearest->position)) {
                     Node *qNew = new Node;
                     qNew->position = newConfig;
-                    renderArea->rrt->add(qNearest, qNew);
-                    qDebug() << renderArea->rrt->distance(renderArea->rrt->lastNode->position, renderArea->rrt->endPos) << endl;
+                    rrt->add(qNearest, qNew);
                 }
             }
         }
+        if (rrt->reached()) {
+            break;
+        }
     }
-    Node *q = renderArea->rrt->lastNode;
+    Node *q;
+    if (rrt->reached())
+        q = rrt->lastNode;
+    else
+        q = rrt->nearest(rrt->endPos);
     while (q != NULL) {
-        renderArea->rrt->path.push_back(q);
+        rrt->path.push_back(q);
         q = q->parent;
     }
     renderArea->update();
 }
+void MainWindow::on_resetButton_clicked()
+{
+    rrt->obstacles->obstacles.clear();
+    rrt->obstacles->obstacles.resize(0);
+    rrt->deleteNodes(rrt->root);
+    rrt->nodes.clear();
+    rrt->nodes.resize(0);
+    rrt->path.clear();
+    rrt->path.resize(0);
+    rrt->initialize();
+    renderArea->update();
+}
+
 MainWindow::~MainWindow()
 {
     delete ui;
