@@ -25,3 +25,5 @@ HEADERS  += mainwindow.h \
     constants.h
 
 FORMS    += mainwindow.ui
+
+INCLUDEPATH += /usr/local/include/eigen3

@@ -4,7 +4,7 @@
 #include <QDebug>
 #include <QLine>
 #include <vector>
-#include <eigen3/Eigen/Dense>
+#include "Eigen/Dense"
 #include <assert.h>
 #include "constants.h"
 
