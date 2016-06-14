@@ -1,5 +1,10 @@
 # RRT Simulator
 
+###Dependencies
+```
+Eigen
+Qt
+```
 ###Compiling
 ```bash
 $ git clone https://github.com/sourishg/rrt-umass
