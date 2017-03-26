@@ -1,10 +1,10 @@
 # RRT Simulator
 
-###Dependencies
+## Dependencies
 * Qt5
 * Eigen
 
-###Compiling
+## Compiling
 ```bash
 $ git clone https://github.com/sourishg/rrt-umass
 $ cd rrt-umass/
@@ -16,7 +16,7 @@ Run the exectuable as
 ```
 $ ./rrt-test
 ```
-###Interface
+## Interface
 
 ![RRT Simulator](imgs/rrt-sim.png)
 
