@@ -26,6 +26,10 @@ void Obstacles::addObstacle(Vector2f firstPoint, Vector2f secondPoint)
         firstPoint.x() -= length;
         secondPoint.x() += length;
     }
+    firstPoint.x() -= BOT_CLEARANCE;
+    firstPoint.y() -= BOT_CLEARANCE;
+    secondPoint.x() += BOT_CLEARANCE;
+    secondPoint.y() += BOT_CLEARANCE;
     obstacles.push_back(make_pair(firstPoint, secondPoint));
 }
 

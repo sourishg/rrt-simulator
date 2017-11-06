@@ -10,5 +10,6 @@ const float END_POS_X = 363.0;
 const float END_POS_Y = 363.0;
 const float NODE_RADIUS = 1.0;
 const float END_DIST_THRESHOLD = 15.0;
+const float BOT_CLEARANCE = 1.5 * BOT_RADIUS;
 
 #endif // CONSTANTS_H

@@ -67,8 +67,8 @@ void RenderArea::drawObstacles(QPainter &painter)
     pair<Vector2f, Vector2f> obstacle;
     for(int i = 0; i < (int)rrt->obstacles->obstacles.size(); i++) {
         obstacle = rrt->obstacles->obstacles[i];
-        QPoint topLeft(obstacle.first.x(), obstacle.first.y());
-        QPoint bottomRight(obstacle.second.x(), obstacle.second.y());
+        QPoint topLeft(obstacle.first.x() + BOT_CLEARANCE, obstacle.first.y() + BOT_CLEARANCE);
+        QPoint bottomRight(obstacle.second.x() - BOT_CLEARANCE, obstacle.second.y() - BOT_CLEARANCE);
         QRect rect(topLeft, bottomRight);
         painter.drawRect(rect);
     }
