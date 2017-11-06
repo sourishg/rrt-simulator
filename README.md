@@ -6,15 +6,14 @@
 
 ## Compiling
 ```bash
-$ git clone https://github.com/sourishg/rrt-umass
-$ cd rrt-umass/
-$ mkdir build && cd build
-$ cmake ..
-$ make
+$ git clone https://github.com/sourishg/rrt-simulator
+$ cd rrt-simulator/
+$ chmod +x build.sh
+$ ./build.sh
 ```
 Run the exectuable as
 ```
-$ ./rrt-test
+$ ./bin/rrt-test
 ```
 ## Interface
 
