@@ -1,5 +1,7 @@
 # RRT Simulator
 
+_**Note**_: I don't actively maintain this repository anymore. PRs are more than welcome to help improve it.
+
 ## Dependencies
 * Qt5
 * Eigen
